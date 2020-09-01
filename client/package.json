@@ -1,0 +1,31 @@
+{
+  "name": "build-a-base",
+  "version": "0.2.0",
+  "private": true,
+  "proxy": "http://localhost:3001/",
+  "secure": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "jwt-decode": "^2.2.0",
+    "path": "^0.12.7",
+    "prop-types": "^15.7.2",
+    "react-dom": "^16.6.3",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

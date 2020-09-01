@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "firstname": "Fred",
+    "lastname": "Flinstone",
+    "title": "Engineer",
+    "department": "Development",
+    "officenum": "1.132",
+    "extension": 2605,
+    "email": "fflinstone@companyname.com"
+  },
+  {
+    "id": 2,
+    "firstname": "Barney",
+    "lastname": "Rubble",
+    "title": "QA Specialist",
+    "department": "Development",
+    "officenum": "1.142",
+    "extension": 2606,
+    "email": "brubble@companyname.com"
+  },
+  {
+    "id": 3,
+    "firstname": "Wilma",
+    "lastname": "Flinstone",
+    "title": "QA Specialist",
+    "department": "Development",
+    "officenum": "1.143",
+    "extension": 2607,
+    "email": "wflinstone@companyname.com"
+  },
+  {
+    "id": 4,
+    "firstname": "Betty",
+    "lastname": "Rubble",
+    "title": "Engineer",
+    "department": "Development",
+    "officenum": "1.133",
+    "extension": 2608,
+    "email": "bbrubble@companyname.com"
+  },
+  {
+    "id": 5,
+    "firstname": "George",
+    "lastname": "Slate",
+    "title": "Manager",
+    "department": "Development",
+    "officenum": "1.130",
+    "extension": 2601,
+    "email": "gslate@companyname.com"
+  },
+  {
+    "id": 6,
+    "firstname": "Cosmo",
+    "lastname": "Spacely",
+    "title": "Manager",
+    "department": "Sales",
+    "officenum": "1.150",
+    "extension": 2701,
+    "email": "cspacely@companyname.com"
+  },
+  {
+    "id": 7,
+    "firstname": "George",
+    "lastname": "Jetson",
+    "title": "Salesman",
+    "department": "Sales",
+    "officenum": "1.151",
+    "extension": 2702,
+    "email": "gjetson@companyname.com"
+  },
+  {
+    "id": 8,
+    "firstname": "Jane",
+    "lastname": "Jetson",
+    "title": "Salesman",
+    "department": "Sales",
+    "officenum": "1.152",
+    "extension": 2703,
+    "email": "jjetson@companyname.com"
+  }
+]
