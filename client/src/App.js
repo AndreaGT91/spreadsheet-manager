@@ -3,20 +3,18 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux"
 import jwt_decode from "jwt-decode";
 
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+// import Login from "./pages/Login";
+// import SignUp from "./pages/SignUp";
+// import Forgot from "./pages/ForgotPassword";
+// import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import Forgot from "./pages/ForgotPassword";
-import BaseTable from "./pages/BaseTable";
 
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-import PrivateRoute from "./components/private-route/PrivateRoute";
+// import PrivateRoute from "./components/private-route/PrivateRoute";
 import store from "./store"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./App.scss";
 
 const token = JSON.parse(localStorage.getItem("jwtToken"));
 
@@ -44,23 +42,18 @@ if (token) {
 
 function App() {
   return (
-    <div className="div1">
-      <Provider store={store}>
-        <Router>
-          <>
-            <Switch>
-              <Route exact path="/Login"><Login /></Route>
-              <Route exact path="/SignUp"><SignUp /></Route>
-              <Route exact path="/forgotpassword"><Forgot /></Route>
-              <Route exact path="/Home"><Home /></Route>
-              <PrivateRoute exact path="/Dashboard" component={Dashboard} />
-              <PrivateRoute path="/BaseTable" component={BaseTable} />
-              <Route path="/*"><Home /></Route>
-            </Switch>
-          </>
-        </Router>
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <Router>
+          <Switch>
+            {/* <Route exact path="/Login"><Login /></Route>
+            <Route exact path="/SignUp"><SignUp /></Route>
+            <Route exact path="/forgotpassword"><Forgot /></Route>
+            <Route exact path="/Home"><Home /></Route>
+            <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
+            <Route path="/*"><Home /></Route>
+          </Switch>
+      </Router>
+    </Provider>
   );
 }
 

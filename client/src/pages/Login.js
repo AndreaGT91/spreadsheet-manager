@@ -32,18 +32,21 @@ const Login = (props) => {
       // alert("Already logged in."); 
       history.push("/Dashboard");
     }
-  })
+  });
+
   useEffect(() => {
     setFormData((prevState) => ({
       ...prevState,
       errors: props.errors
     }));
-  }, [props.errors])
-  useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      history.push("/Dashboard") // push user to dashboard when they login
-    }
-  }, [props.auth.isAuthenticated])
+  }, [props.errors]);
+
+  // useEffect(() => {
+  //   if (props.auth.isAuthenticated) {
+  //     history.push("/Dashboard") // push user to dashboard when they login
+  //   }
+  // }, [props.auth.isAuthenticated]);
+
   function handleChange(event) {
     event.persist();
     setFormData((prevState) => ({
@@ -52,6 +55,7 @@ const Login = (props) => {
       errors: {}
     }))
   };
+
   function handleSubmit(event) {
     event.preventDefault();
     const userData = {
@@ -60,7 +64,9 @@ const Login = (props) => {
     };
     props.loginUser(userData);
   };
+
   const { errors } = formData;
+
   return (
     <div style={inlineStyle2}>
       <NavBar />
