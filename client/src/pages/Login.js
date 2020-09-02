@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
@@ -7,18 +7,11 @@ import classnames from "classnames";
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 
-import NavBar from "../components/NavBar";
 import Upload5 from '../images/ac512x512.png';
 
-const inlineStyle2 = {
-    
-    
-  };
- 
 const Login = (props) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -68,23 +61,19 @@ const Login = (props) => {
   const { errors } = formData;
 
   return (
-    <div style={inlineStyle2}>
-      <NavBar />
-      <Image style={{ /* Rectangle 6 */
-        width: "900px",
-        height: "900px",
-        opacity: "0.3",
-        marginTop: "1%",
-
-        marginLeft: "15%",
-        position: "relative",
-      }} src={Upload5}></Image>
-      <Card style={{ marginTop: "-50%", marginBottom: "10%", width: "30%", marginRight: "auto", marginLeft: "auto" }}>
+    <>
+      <Image 
+        className="d-block mx-auto img-fluid w-75"
+        style={{ opacity: "0.3" }}
+        src={Upload5}
+        alt="Build A Base Logo">
+      </Image>
+      <Card className="d-block mx-auto" style={{ marginTop: "-65%", width: "30%" }}>
         <Card.Body>
           <h1 style={{ textAlign: "center" }}>Login</h1>
-          <hr></hr>
+          <hr />
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="email">
+            <Form.Group controlId="email">  
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -101,9 +90,6 @@ const Login = (props) => {
                 {errors.email}
                 {errors.emailnotfound}
               </span>
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="password">
@@ -124,22 +110,17 @@ const Login = (props) => {
                 {errors.passwordincorrect}
               </span>
             </Form.Group>
-            <a href="/forgotpassword">Forgot Password?</a>
-            <hr></hr>
-            {/* <ButtonGroup aria-label="Login button group"> */}
-              <Button style={{ marginLeft: "auto", marginRight: "auto", display: "block" }} variant="primary" type="submit">
-                Login
-              </Button>
-              {/* {' '}
-              <Button style={{ marginLeft: "auto", marginRight: "auto", display: "block" }} variant="primary" type="reset">
-                Cancel
-              </Button>
-            </ButtonGroup> */}
+
+            <Link to="/forgotpassword">Forgot Password?</Link>
+            <Link to="/SignUp" style={{ float: "right" }}>New User?</Link>
+            <hr />
+            <Button className="d-block mx-auto" type="submit">
+              Login
+            </Button>
           </Form>
         </Card.Body>
       </Card>
-    </div>
-
+    </>
   );
 }
 
