@@ -1,24 +1,17 @@
-  
-import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import React, { useState, useEffect } from "react";
+import { Link, withRouter, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-// import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Card from 'react-bootstrap/Card';
-import Image from 'react-bootstrap/Image';
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
 
-import Upload5 from '../images/ac512x512.png';
-import NavBar from "../components/NavBar";
-import { registerUser } from '../actions/authActions';
-
-const inlineStyle2 = {
-  background: 'linear-gradient(180deg, #e4f5fc 10%, white 50%, white)'
-};
+import { registerUser } from "../actions/authActions";
+import backgroundImage from "../images/ac512x512.png";
 
 const SignUp = (props) => {
   const [formData, setFormData] = useState({
@@ -31,14 +24,13 @@ const SignUp = (props) => {
   });
 
   const history = useHistory();
-
+  
   useEffect(() => {
-    // If logged in and user navigates to SignUp page, should redirect them to dashboard
+    // If logged in and user navigates to SignUp page, should redirect them to Dashboard
     if (props.auth.isAuthenticated) {
-      // alert("Already logged in."); 
       history.push("/Dashboard");
     }
-  })
+  });
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -74,23 +66,20 @@ const SignUp = (props) => {
   const { errors } = formData;
 
   return (
-    <div style={inlineStyle2}>
-      <NavBar />
-      <Image style={{ /* Rectangle 6 */
-        width: "900px",
-        height: "900px",
-        opacity: "0.3",
-        marginTop: "1%",
-
-        marginLeft: "15%",
-        position: "relative",
-      }} src={Upload5}></Image>
-      <Card style={{ marginTop: "-50%", marginBottom: "10%", width: "30%", marginRight: "auto", marginLeft: "auto" }}>
-        <h1 style={{ textAlign: "center", marginTop: "3%" }}>Fill out information below</h1>
-        <hr></hr>
+    <>
+      <Image 
+        className="d-block mx-auto img-fluid w-75"
+        style={{ opacity: "0.3" }}
+        src={backgroundImage}
+        alt="Build A Base Logo">
+      </Image>
+      <Card className="d-block mx-auto" style={{ marginTop: "-65%", width: "30%" }}>
         <Card.Body>
+          <Link to="/Login" style={{ float: "right", color: "black" }}>x</Link>
+          <h1 style={{ textAlign: "center" }}>Sign Up</h1>
+          <hr />
           <Form onSubmit={handleSubmit}>
-            <Form.Row>
+          <Form.Row>
               <Form.Group as={Col} controlId="firstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
@@ -139,6 +128,9 @@ const SignUp = (props) => {
                   })}
                 />
                 <span className="red-text">{errors.email}</span>
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
               </Form.Group>
             </Form.Row>
 
@@ -162,10 +154,10 @@ const SignUp = (props) => {
 
             <Form.Row>
               <Form.Group as={Col} controlId="password2">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Verify Password"
+                  placeholder="Confirm Password"
                   autoComplete="new-password"
                   onChange={handleChange}
                   value={formData.password2}
@@ -177,20 +169,15 @@ const SignUp = (props) => {
                 <span className="red-text">{errors.password2}</span>
               </Form.Group>
             </Form.Row>
-            <hr></hr>
+            <hr />
             <Button style={{  marginLeft: "auto", marginRight: "auto", display:"block"  }} variant="primary" type="submit">
               Create Account
             </Button>          
-              {/* {' '}
-              <Button style={{ marginLeft: "auto", marginRight: "auto", display: "block" }} variant="primary" type="reset">
-                Cancel
-              </Button>
-            </ButtonGroup> */}
           </Form>
         </Card.Body>
       </Card>
-    </div>
-  )
+    </>
+  );
 };
 
 SignUp.propTypes = {

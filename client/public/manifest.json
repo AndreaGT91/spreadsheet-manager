@@ -1,15 +1,18 @@
 {
-  "short_name": "Build-A-Base",
+  "short-name": "Build-A-Base",
   "name": "Build-A-Base Spreadsheet Manager",
+  "author": "Andrea Bentley/Katherine Jones",
+  "description": "Allows non-technical users to create databases from spreadsheets",
+  "version": "0.1",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64",
+      "sizes": "48x48",
       "type": "image/png"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "./index.hmtl",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#FFFFFF"
 }

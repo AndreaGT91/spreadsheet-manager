@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../actions/authActions";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Image from 'react-bootstrap/Image';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
 
-import Upload5 from '../images/ac512x512.png';
+import { loginUser } from "../actions/authActions";
+import backgroundImage from "../images/ac512x512.png";
 
 const Login = (props) => {
   const [formData, setFormData] = useState({
@@ -18,11 +18,12 @@ const Login = (props) => {
     password: "",
     errors: {}
   });
+
   const history = useHistory();
+
   useEffect(() => {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
+    // If logged in and user navigates to Login page, should redirect them to Dashboard
     if (props.auth.isAuthenticated) {
-      // alert("Already logged in."); 
       history.push("/Dashboard");
     }
   });
@@ -34,14 +35,9 @@ const Login = (props) => {
     }));
   }, [props.errors]);
 
-  // useEffect(() => {
-  //   if (props.auth.isAuthenticated) {
-  //     history.push("/Dashboard") // push user to dashboard when they login
-  //   }
-  // }, [props.auth.isAuthenticated]);
-
   function handleChange(event) {
     event.persist();
+
     setFormData((prevState) => ({
       ...prevState,
       [event.target.id]: event.target.value,
@@ -51,6 +47,7 @@ const Login = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+
     const userData = {
       email: formData.email,
       password: formData.password,
@@ -65,7 +62,7 @@ const Login = (props) => {
       <Image 
         className="d-block mx-auto img-fluid w-75"
         style={{ opacity: "0.3" }}
-        src={Upload5}
+        src={backgroundImage}
         alt="Build A Base Logo">
       </Image>
       <Card className="d-block mx-auto" style={{ marginTop: "-65%", width: "30%" }}>
@@ -74,7 +71,7 @@ const Login = (props) => {
           <hr />
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="email">  
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
@@ -111,7 +108,7 @@ const Login = (props) => {
               </span>
             </Form.Group>
 
-            <Link to="/forgotpassword">Forgot Password?</Link>
+            <Link to="/ForgotPassword">Forgot Password?</Link>
             <Link to="/SignUp" style={{ float: "right" }}>New User?</Link>
             <hr />
             <Button className="d-block mx-auto" type="submit">
@@ -122,7 +119,7 @@ const Login = (props) => {
       </Card>
     </>
   );
-}
+};
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
