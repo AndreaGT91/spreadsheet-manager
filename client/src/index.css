@@ -1,0 +1,25 @@
+.formCard {
+    margin-top: -65%;
+    width: 30%
+}
+
+@media screen and (max-width: 770px) {    
+    .formCard {
+        margin-top: -50%;
+        width: 50%
+    }
+  }
+
+@media screen and (max-width: 750px) {    
+    .formCard {
+        margin-top: -50%;
+        width: 75%
+    }
+  }
+
+  @media screen and (max-width: 300px) {    
+    .formCard {
+        margin-top: -50%;
+        width: 95%
+    }
+  }
