@@ -68,7 +68,7 @@ const ForgotPassword = (props) => {
         src={backgroundImage}
         alt="Build A Base Logo">
       </Image>
-      <Card className="d-block mx-auto" style={{ marginTop: "-65%", width: "30%" }}>
+      <Card className="d-block mx-auto formCard">
         <Card.Body>
           <Link to="/Login" style={{ float: "right", color: "black" }}>x</Link>
           <h1 style={{ textAlign: "center" }}>Reset Password</h1>

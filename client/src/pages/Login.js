@@ -65,7 +65,7 @@ const Login = (props) => {
         src={backgroundImage}
         alt="Build A Base Logo">
       </Image>
-      <Card className="d-block mx-auto" style={{ marginTop: "-65%", width: "30%" }}>
+      <Card className="d-block mx-auto formCard">
         <Card.Body>
           <h1 style={{ textAlign: "center" }}>Login</h1>
           <hr />
