@@ -1,5 +1,5 @@
 {
-  "short-name": "Build-A-Base",
+  "short_name": "Build-A-Base",
   "name": "Build-A-Base Spreadsheet Manager",
   "author": "Andrea Bentley/Katherine Jones",
   "description": "Allows non-technical users to create databases from spreadsheets",
