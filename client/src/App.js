@@ -47,7 +47,7 @@ function App() {
           <Switch>
             <Route exact path="/Login"><Login /></Route>
             <Route exact path="/SignUp"><SignUp /></Route>
-            <Route exact pa th="/ForgotPassword"><ForgotPassword /></Route>
+            <Route exact path="/ForgotPassword"><ForgotPassword /></Route>
             <Route exact path="/Home"><Home /></Route>
             {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
             <Route path="/*"><Home /></Route>
