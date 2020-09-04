@@ -6,12 +6,12 @@ import jwt_decode from "jwt-decode";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
-// import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-// import PrivateRoute from "./components/private-route/PrivateRoute";
+import PrivateRoute from "./components/private-route/PrivateRoute";
 import store from "./store"
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -47,9 +47,9 @@ function App() {
           <Switch>
             <Route exact path="/Login"><Login /></Route>
             <Route exact path="/SignUp"><SignUp /></Route>
-            <Route exact pa th="/ForgotPassword"><ForgotPassword /></Route>
+            <Route exact path="/ForgotPassword"><ForgotPassword /></Route>
             <Route exact path="/Home"><Home /></Route>
-            {/* <PrivateRoute exact path="/Dashboard" component={Dashboard} /> */}
+            <PrivateRoute exact path="/Dashboard" component={Dashboard} />
             <Route path="/*"><Home /></Route>
           </Switch>
       </Router>

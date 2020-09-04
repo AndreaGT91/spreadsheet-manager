@@ -36,11 +36,11 @@ export const loginUser = userData => dispatch => {
         .then(res => {
             // Save to localStorage
             // Set token to localStorage
-            const { token } = res.data;
-            const { id } = res.data;
+            const { token, id, name } = res.data;
 
             localStorage.setItem("jwtToken", JSON.stringify(token));
             localStorage.setItem("userID", JSON.stringify(id));
+            localStorage.setItem("userName", JSON.stringify(name));
 
             // Set token to Auth header
             setAuthToken(token);
@@ -79,6 +79,7 @@ export const logoutUser = () => dispatch => {
     // Remove token from local storage
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("userID")
+    localStorage.removeItem("userName")
 
     // Remove auth header for future requests
     setAuthToken(false);

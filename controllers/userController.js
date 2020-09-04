@@ -79,6 +79,7 @@ module.exports = {
                 (err, token) => {
                   response.json({
                     id: user._id,
+                    name: user.firstName + " " + user.lastName,
                     success: true,
                     token: "Bearer " + token
                   });
