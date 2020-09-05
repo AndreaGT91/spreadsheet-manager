@@ -2,15 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
-import { Container } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import NavBar from "../components/NavBar";
-// import Databases from "../components/Databases";
 
 import backgroundImage from "../images/ac512x512.png";
 
 const Dashboard = () => {
+
+  function handleImportClick(event) {
+    event.preventDefault();
+    console.log("Clicked!");
+  };
+
   return (
     <>
       <NavBar />
@@ -21,10 +29,21 @@ const Dashboard = () => {
         alt="Build A Base Logo">
       </Image>
 
-      {/* <Databases/> */}
-
-      <Container className="d-block mx-auto" style={{ marginTop: "-70%", width: "80%" }}>
-        <h1 style={{ textAlign: "center" }}>Your Databases</h1>
+      <Container className="d-block mx-auto" style={{ marginTop:"-70%", width:"80%" }}>
+        <Row>
+          <Col>
+            <h1>Your Databases</h1>
+          </Col>
+          <Col>
+            <Button 
+              className="float-right" 
+              variant="info" 
+              style={{ marginTop:"20px" }}
+              onClick={handleImportClick}>
+              Import
+            </Button>
+          </Col>
+        </Row>
         <ListGroup>
           <ListGroup.Item>
             <Link to="/BaseTable/n1010SampleInformation">n1010SampleInformation</Link>
