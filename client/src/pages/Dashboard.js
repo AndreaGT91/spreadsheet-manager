@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,21 +15,48 @@ import NavBar from "../components/NavBar";
 import backgroundImage from "../images/ac512x512.png";
 
 const Dashboard = () => {
+  const [showModal, setShowModal] = useState(false);
 
-  function handleImportClick(event) {
-    event.preventDefault();
-    console.log("Clicked!");
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleFileSelect = () => {
+    setShowModal(false);
   };
 
   return (
     <>
       <NavBar />
-      <Image 
+      <Image
         className="d-block mx-auto img-fluid w-75"
         style={{ opacity: "0.3" }}
         src={backgroundImage}
         alt="Build A Base Logo">
       </Image>
+
+      <Modal 
+        show={showModal} 
+        onHide={handleClose} 
+        aria-labelledby="import-modal"
+        centered
+        style={{ opacity:1 }}>
+
+        <Modal.Header closeButton>
+          <Modal.Title id="import-modal">Import Spreadsheet</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.File id="fileToImportSelector" label="Select file to import" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+          <Button variant="info" onClick={handleFileSelect}>
+            Select
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Container className="d-block mx-auto" style={{ marginTop:"-70%", width:"80%" }}>
         <Row>
@@ -35,11 +64,11 @@ const Dashboard = () => {
             <h1>Your Databases</h1>
           </Col>
           <Col>
-            <Button 
-              className="float-right" 
-              variant="info" 
-              style={{ marginTop:"20px" }}
-              onClick={handleImportClick}>
+            <Button
+              className="float-right"
+              variant="info"
+              style={{ marginTop: "20px" }}
+              onClick={handleShow}>
               Import
             </Button>
           </Col>
