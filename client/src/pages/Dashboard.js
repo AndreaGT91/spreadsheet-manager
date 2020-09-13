@@ -12,7 +12,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 import NavBar from "../components/NavBar";
 import backgroundImage from "../images/ac512x512.png";
-import API from "../utils/API";
+import readSpreadsheet from "../utils/readSpreadsheet";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   const handleFileSelect = () => {
     setShowModal(false);
-    API.readSpreadsheet(fileName)
+    readSpreadsheet(fileName)
     .then(response => {
       console.log("Response: ", response);
     })
