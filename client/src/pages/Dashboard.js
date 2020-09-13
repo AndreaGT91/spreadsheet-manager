@@ -29,6 +29,7 @@ const Dashboard = () => {
     setShowModal(false);
     readSpreadsheet(fileName)
     .then(response => {
+      // TODO: returns name of new base; need to take that and open it for display
       console.log("Response: ", response);
     })
     .catch(error => {

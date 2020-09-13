@@ -101,7 +101,6 @@ const readSpreadsheet = async function(fileName) {
             for (let key in firstDataRow) {
               newField = { fieldName: key, fieldType: "String" };
 
-              // console.log("first data row: ", key, ": ", firstDataRow[key]);
               // Make sure cell data is not null or undefined
               if (firstDataRow[key]) {
                 if (typeof firstDataRow[key] === "number") {
@@ -149,14 +148,14 @@ const readSpreadsheet = async function(fileName) {
             const newBase = {
               creatorID: JSON.parse(localStorage.getItem("userID")),
               baseName: newBaseName,
+              baseTitle: fn,
               model: baseModel
             };
-            console.log("newbase: ", newBase);
 
             // Add entry to Bases collection, then add records to new custom collection
-            API.createBase(newBase)
+            await API.createBase(newBase)
             .then(() => { return axios.post("/api/custom/" + newBase.baseName, { baseModel: newBase.model, data: jsonData })})
-            .then(() => { result = newBase.baseName })
+            .then(() => { result = newBase.baseName });
             // In theory, the catch below will handle this
             // .catch(error => {
             //   console.log("Error creating database: ", error);
