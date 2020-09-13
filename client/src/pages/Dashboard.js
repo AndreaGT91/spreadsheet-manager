@@ -40,11 +40,6 @@ const Dashboard = () => {
     if (event.target.files.length > 0) {
       setFileName(event.target.files[0]);
     };
-    
-    // console.log(event.target.value);
-    // const myURL = URL.createObjectURL(event.target.files[0]);
-    // console.log(myURL);
-    // URL.revokeObjectURL(myURL);
   };
 
   return (
