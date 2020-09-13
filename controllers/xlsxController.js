@@ -1,5 +1,5 @@
 const XLSX = require("xlsx");
-const fs = require("fs");
+// const fs = require("fs");
 
 module.exports = {
   convertXLSX: function(request, response) {
@@ -34,8 +34,15 @@ module.exports = {
       return { t: "s", v: value, r: "<t>" + value + "</t>", h: value, w: value }
     };
 
-    if (fs.existsSync(request.body.filename)) {
-      const workbook = XLSX.readFile(request.body.filename, { cellDates: true, dateNF:'yyyy"-"mm"-"dd' });
+    console.log("IN CONVERTXLSX");
+    let reader = new window.FileReader();
+		reader.readAsBinaryString(request.body.fileName);
+		reader.onload = function(e) {   //Handle the load event. Triggered when the read operation completes.
+			let data = e.target.result;
+			let workbook = XLSX.read(data, {type: 'binary', cellDates: true, dateNF:'yyyy"-"mm"-"dd' });
+
+    // if (fs.existsSync(request.body.filename)) {
+      // const workbook = XLSX.readFile(request.body.filename, { cellDates: true, dateNF:'yyyy"-"mm"-"dd' });
       // For MVP, we are only handling first sheet in a multi-sheet workbook;
       // Also assuming that there is a header row
       let result = [];
@@ -82,8 +89,8 @@ module.exports = {
 
       response.json(result);
     }
-    else {
-      response.status(404);
-    };
+    // else {
+    //   response.status(404);
+    // };
   }
 };

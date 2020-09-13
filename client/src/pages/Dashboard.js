@@ -11,17 +11,40 @@ import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import NavBar from "../components/NavBar";
-
 import backgroundImage from "../images/ac512x512.png";
+import API from "../utils/API";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
+  const [fileName, setFileName] = useState({});
 
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+      setFileName({});
+      setShowModal(false);
+  };
+
   const handleShow = () => setShowModal(true);
 
   const handleFileSelect = () => {
     setShowModal(false);
+    API.readSpreadsheet(fileName)
+    .then(response => {
+      console.log("Response: ", response);
+    })
+    .catch(error => {
+      console.log("Error reading file: ", error);
+    });
+  };
+
+  const fileNameChange = (event) => {
+    if (event.target.files.length > 0) {
+      setFileName(event.target.files[0]);
+    };
+    
+    // console.log(event.target.value);
+    // const myURL = URL.createObjectURL(event.target.files[0]);
+    // console.log(myURL);
+    // URL.revokeObjectURL(myURL);
   };
 
   return (
@@ -47,7 +70,7 @@ const Dashboard = () => {
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.File id="fileToImportSelector" label="Select file to import" />
+              <Form.File id="fileToImportSelector" label="Select file to import" onChange={fileNameChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
