@@ -2,7 +2,40 @@ import axios from "axios";
 import XLSX from "xlsx";
 import API from "./API";
 
-  // Reads spreadsheet in fileName, returns new collection (base) name
+const getUniqueBaseName = async function(baseName, counter) {
+  return new Promise(async function(resolve, reject) {
+    let newBaseName = baseName;
+    let ctr = counter;
+    let success = true;
+
+    try {
+      await API.getBaseByName(newBaseName)
+      .then( async response => {
+        if (response.data) {
+          // If we've already done an iteration, need to remove old number
+          if (ctr > 0) {
+            newBaseName = newBaseName.splice(0, newBaseName.length - 1);
+          };
+  
+          ctr++;
+          newBaseName = newBaseName + (ctr).toString(); 
+          await getUniqueBaseName(newBaseName, ctr);
+        };
+      });
+    }
+    catch(error) {
+      success = false;
+      reject(error);
+    }
+    finally {
+      if (success) {
+        resolve(newBaseName);
+      };
+    };
+  });
+};
+
+// Reads spreadsheet in fileName, returns new collection (base) name
 const readSpreadsheet = async function(fileName) {
   return new Promise((resolve, reject) => {
     let reader = new FileReader();
@@ -143,27 +176,23 @@ const readSpreadsheet = async function(fileName) {
               };
             };
 
-            newBaseName = await API.getUniqueBaseName(newBaseName, 0);
+            await getUniqueBaseName(newBaseName, 0)
+            .then( async response => {
+              const newBase = {
+                creatorID: JSON.parse(localStorage.getItem("userID")),
+                baseName: response,
+                baseTitle: fn,
+                model: baseModel
+              };
 
-            const newBase = {
-              creatorID: JSON.parse(localStorage.getItem("userID")),
-              baseName: newBaseName,
-              baseTitle: fn,
-              model: baseModel
-            };
-
-            // Add entry to Bases collection, then add records to new custom collection
-            await API.createBase(newBase)
-            .then(() => { return axios.post("/api/custom/" + newBase.baseName, { baseModel: newBase.model, data: jsonData })})
-            .then(() => { result = newBase.baseName });
-            // In theory, the catch below will handle this
-            // .catch(error => {
-            //   console.log("Error creating database: ", error);
-            //   success = false;
-            // });
-          }; // if jsonData.length > 0
-        }; // if workbook.SheetNames.length > 0
-      } // try
+              // Add entry to Bases collection, then add records to new custom collection
+              await API.createBase(newBase)
+              .then(() => { return axios.post("/api/custom/" + newBase.baseName, { baseModel: newBase.model, data: jsonData })})
+              .then(() => { result = newBase.baseName });
+            });
+          }; // end jsonData.length > 0
+        }; // end workbook.SheetNames.length > 0
+      } // end try
       catch(error) {
         success = false;
         reject(error);
@@ -173,11 +202,11 @@ const readSpreadsheet = async function(fileName) {
           resolve(result);
         };
       };
-    }; // reader.onload
+    }; // end reader.onload
 
     // Promise resovle/reject handled in onload event handler
     reader.readAsBinaryString(fileName);
-  }); // Promise
+  }); // end Promise
 };
 
 export default readSpreadsheet;

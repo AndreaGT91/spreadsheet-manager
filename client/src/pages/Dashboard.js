@@ -72,7 +72,7 @@ const Dashboard = () => {
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
           <Button variant="info" onClick={handleFileSelect}>
-            Select
+            Import
           </Button>
         </Modal.Footer>
       </Modal>

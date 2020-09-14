@@ -69,25 +69,5 @@ export default {
     const response = await this.getBaseByName(baseName);
     if (!response.data) { return response }
     return axios.patch("/api/custom/" + baseName + "/" + id, response.data.model); // Has to be patch so we can send model through body.data
-  },
-
-  getUniqueBaseName: async function(baseName, counter) {
-    let newBaseName = baseName;
-    let ctr = counter;
-    const response = await this.getBaseByName(newBaseName);
-    if (response.data) { 
-      ctr++;
-      newBaseName = newBaseName + (ctr).toString(); 
-    };
-    // Getting error that .splice is not a function
-    // if (response.data.length > 0) {
-    //   if (counter > 0) {
-    //     newBaseName = newBaseName.splice(0, newBaseName.length - 1);
-    //   };
-    //   counter++;
-    //   newBaseName = newBaseName + (counter).toString();
-    //   this.getUniqueBaseName(newBaseName, counter);
-    // };
-    return newBaseName;
   }
 };
