@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import BaseTable from "./pages/BaseTable"
 
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -49,6 +50,7 @@ function App() {
             <Route exact path="/SignUp"><SignUp /></Route>
             <Route exact path="/ForgotPassword"><ForgotPassword /></Route>
             <Route exact path="/Home"><Home /></Route>
+            <Route exact path="/BaseTable/:basename"><BaseTable /></Route>
             <PrivateRoute exact path="/Dashboard" component={Dashboard} />
             <Route path="/*"><Home /></Route>
           </Switch>

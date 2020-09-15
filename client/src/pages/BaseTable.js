@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Table, Form, Col, Button } from 'react-bootstrap';
-import NavBar2 from '../components/NavBar2';
-// import Image from 'react-bootstrap/Image';
-
-// import Upload5 from '../images/ac512x512.png';
-
-// import API from '../utils/API';
+import NavBar from '../components/NavBar';
+import API from '../utils/API';
 import './BaseTable.css';
 import test from "./test.json";
 
 const BaseTable = (props) => {
-  const [dataList, setDataList] = useState(test);
+  // const [dataList, setDataList] = useState(test);
   // Dummy state, used to force re-render
   const [updateView, setUpdateView] = useState(0);
 
@@ -25,17 +21,17 @@ const BaseTable = (props) => {
     headers.push(key);
   };
 
-  // async function getDataList(baseName) {
-  //   const response = await API.getCustom(baseName);
-  //   return response;
+  async function getDataList(baseName) {
+    const response = await API.getCustom(baseName);
+    return response;
   // await API.getCustom(props.children)
   //   .then(response => { return response.data })
   //   .catch(() => { return [] });
-  // };
+  };
 
-  // let dl = getDataList(props.children);
-  // const [dataList, setDataList] = useState(dl.data);
-  // console.log("dataList: ", dataList);
+  let dl = getDataList(props.children);
+  const [dataList, setDataList] = useState(dl.data);
+  console.log("dataList: ", dataList);
 
   function onColumnClick(event) {
     const colName = event.target.dataset.text;
@@ -60,7 +56,7 @@ const BaseTable = (props) => {
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
-    setFilterData(event.target.value);
+    setFilterData(event.target.value.toLowerCase());
   };
 
   // When the form is submitted, load books matching the entered keyword(s)
@@ -73,7 +69,7 @@ const BaseTable = (props) => {
       const dl = [];
 
       test.forEach(item => {
-        if (item[filterSelect] === filterData) {
+        if (item[filterSelect].toLowerCase() === filterData) {
           dl.push(item);
         }
       });
@@ -84,16 +80,8 @@ const BaseTable = (props) => {
 
   return (
     <>
-      <NavBar2 />
-      {/* <Image style={{ 
-        width: "900px",
-        height: "900px",
-        opacity: "0.3",
-        marginTop: "1%",
+      <NavBar />
 
-        marginLeft: "15%",
-        position: "relative",
-      }} src={Upload5}></Image> */}
       <Container className="container">
         {/* <h1 className="h1">{props.children}</h1> */}
         <h1 className="h1">n1010SampleInformation</h1>
