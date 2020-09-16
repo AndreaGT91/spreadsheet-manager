@@ -36,10 +36,3 @@ module.exports = {
       .catch(error => response.status(422).json(error));
   }
 };
-
-// mongoose.connection.db.listCollections({name: 'mycollectionname'})
-//     .next(function(err, collinfo) {
-//         if (collinfo) {
-//             // The collection exists
-//         }
-//     });

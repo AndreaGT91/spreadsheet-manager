@@ -1,30 +1,108 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
-import { Container } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import NavBar from "../components/NavBar";
-// import Databases from "../components/Databases";
-
 import backgroundImage from "../images/ac512x512.png";
+import readSpreadsheet from "../utils/readSpreadsheet";
 
 const Dashboard = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [fileName, setFileName] = useState(null);
+
+  const handleClose = () => {
+      setFileName(null);
+      setShowModal(false);
+  };
+
+  const handleShow = () => setShowModal(true);
+
+  const handleFileSelect = () => {
+    setShowModal(false);
+
+    if (fileName) {
+      readSpreadsheet(fileName)
+      .then(response => {
+        // TODO: returns name of new base; need to take that and open it for display or add to list
+        console.log("Response: ", response);
+      })
+      .catch(error => {
+        console.log("Error reading file: ", error);
+        // TODO: Use something other than alert
+        alert(fileName.name + " is not a supported type of spreadsheet.");
+      });
+    }
+    else {
+      // TODO: Use something other than alert
+      alert("No file selected.");
+    };
+
+    setFileName(null);
+  };
+
+  const fileNameChange = (event) => {
+    if (event.target.files.length > 0) {
+      setFileName(event.target.files[0]);
+    };
+  };
+
   return (
     <>
       <NavBar />
-      <Image 
+      <Image
         className="d-block mx-auto img-fluid w-75"
         style={{ opacity: "0.3" }}
         src={backgroundImage}
         alt="Build A Base Logo">
       </Image>
 
-      {/* <Databases/> */}
+      <Modal 
+        show={showModal} 
+        onHide={handleClose} 
+        aria-labelledby="import-modal"
+        centered
+        style={{ opacity:1 }}>
 
-      <Container className="d-block mx-auto" style={{ marginTop: "-70%", width: "80%" }}>
-        <h1 style={{ textAlign: "center" }}>Your Databases</h1>
+        <Modal.Header closeButton>
+          <Modal.Title id="import-modal">Import Spreadsheet</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.File id="fileToImportSelector" label="Select file to import" onChange={fileNameChange} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+          <Button variant="info" onClick={handleFileSelect}>
+            Import
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Container className="d-block mx-auto" style={{ marginTop:"-70%", width:"80%" }}>
+        <Row>
+          <Col>
+            <h1>Your Databases</h1>
+          </Col>
+          <Col>
+            <Button
+              className="float-right"
+              variant="info"
+              style={{ marginTop: "20px" }}
+              onClick={handleShow}>
+              Import
+            </Button>
+          </Col>
+        </Row>
         <ListGroup>
           <ListGroup.Item>
             <Link to="/BaseTable/n1010SampleInformation">n1010SampleInformation</Link>

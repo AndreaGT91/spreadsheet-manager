@@ -7,7 +7,6 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
 
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -48,9 +47,8 @@ function App() {
             <Route exact path="/Login"><Login /></Route>
             <Route exact path="/SignUp"><SignUp /></Route>
             <Route exact path="/ForgotPassword"><ForgotPassword /></Route>
-            <Route exact path="/Home"><Home /></Route>
             <PrivateRoute exact path="/Dashboard" component={Dashboard} />
-            <Route path="/*"><Home /></Route>
+            <Route path="/*"><Login /></Route>
           </Switch>
       </Router>
     </Provider>
