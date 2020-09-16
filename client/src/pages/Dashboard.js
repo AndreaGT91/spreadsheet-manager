@@ -16,10 +16,10 @@ import readSpreadsheet from "../utils/readSpreadsheet";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
-  const [fileName, setFileName] = useState({});
+  const [fileName, setFileName] = useState(null);
 
   const handleClose = () => {
-      setFileName({});
+      setFileName(null);
       setShowModal(false);
   };
 
@@ -27,14 +27,25 @@ const Dashboard = () => {
 
   const handleFileSelect = () => {
     setShowModal(false);
-    readSpreadsheet(fileName)
-    .then(response => {
-      // TODO: returns name of new base; need to take that and open it for display
-      console.log("Response: ", response);
-    })
-    .catch(error => {
-      console.log("Error reading file: ", error);
-    });
+
+    if (fileName) {
+      readSpreadsheet(fileName)
+      .then(response => {
+        // TODO: returns name of new base; need to take that and open it for display or add to list
+        console.log("Response: ", response);
+      })
+      .catch(error => {
+        console.log("Error reading file: ", error);
+        // TODO: Use something other than alert
+        alert(fileName.name + " is not a supported type of spreadsheet.");
+      });
+    }
+    else {
+      // TODO: Use something other than alert
+      alert("No file selected.");
+    };
+
+    setFileName(null);
   };
 
   const fileNameChange = (event) => {
