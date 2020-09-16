@@ -2,6 +2,8 @@ import axios from "axios";
 import XLSX from "xlsx";
 import API from "./API";
 
+// Helper function - makes sure name for new collection is unique
+// If name is found, add "1" to end. If that is found, change "1" to "2", and so on
 const getUniqueBaseName = async function(baseName, counter) {
   return new Promise(async function(resolve, reject) {
     let newBaseName = baseName;
@@ -14,12 +16,15 @@ const getUniqueBaseName = async function(baseName, counter) {
         if (response.data) {
           // If we've already done an iteration, need to remove old number
           if (ctr > 0) {
-            newBaseName = newBaseName.splice(0, newBaseName.length - 1);
+            newBaseName = newBaseName.slice(0, newBaseName.length - 1);
           };
   
           ctr++;
           newBaseName = newBaseName + (ctr).toString(); 
-          await getUniqueBaseName(newBaseName, ctr);
+          await getUniqueBaseName(newBaseName, ctr)
+          .then(response => {
+            newBaseName = response;
+          });
         };
       });
     }
@@ -122,7 +127,7 @@ const readSpreadsheet = async function(fileName) {
           };
 
           // If defval is not specified, null and undefined values are skipped
-          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw:false, dateNF:'yyyy"-"mm"-"dd', defval:"" });
+          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw:false, defval:"" });
 
           // Verify that we actually got data, then create model for new collection
           if (jsonData.length > 0) {
