@@ -37,22 +37,12 @@ export default {
   },
 
   getCustom: async function(baseName) {
-    await this.getBaseByName(baseName)
-    .then( async response => {
+    const response = await this.getBaseByName(baseName)
       if (response.data) {
-        const res = await axios.patch("/api/custom/" + baseName, response.data.model) // Has to be patch so we can send model through body.data
-        // console.log("res.data: ", res.data);
+        const res = axios.patch("/api/custom/" + baseName, response.data.model) // Has to be patch so we can send model through body.data
         return res
       }
       else { return [] }
-    })
-    // const response = await this.getBaseByName(baseName)
-    // if (response.data) {
-    //   const res = await axios.patch("/api/custom/" + baseName, response.data.model) // Has to be patch so we can send model through body.data
-    //   console.log("res.data: ", res.data);
-    //   return res
-    // }
-    // else { return response }
   },
 
   createCustom: async function(baseName, baseData) {

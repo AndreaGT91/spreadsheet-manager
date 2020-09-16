@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Table, Form, Col, Button } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
 import API from '../utils/API';
@@ -6,7 +6,8 @@ import './BaseTable.css';
 import test from "./test.json";
 
 const BaseTable = (props) => {
-  // const [dataList, setDataList] = useState(test);
+  const dbName = window.location.pathname.split('/')[2]
+  const [dataList, setDataList] = useState("");
   // Dummy state, used to force re-render
   const [updateView, setUpdateView] = useState(0);
 
@@ -21,17 +22,18 @@ const BaseTable = (props) => {
     headers.push(key);
   };
 
-  async function getDataList(baseName) {
-    const response = await API.getCustom(baseName);
-    return response;
-  // await API.getCustom(props.children)
-  //   .then(response => { return response.data })
-  //   .catch(() => { return [] });
-  };
+  useEffect(() => {
+    getDataList(dbName)
+  }, [])
 
-  let dl = getDataList(props.children);
-  const [dataList, setDataList] = useState(dl.data);
-  console.log("dataList: ", dataList);
+  async function getDataList(baseName) {
+    await API.getCustom(baseName)
+      .then(response => {
+        console.log(response.data)
+        setDataList(response.data)
+      })
+      .catch(() => { return [] });
+  };
 
   function onColumnClick(event) {
     const colName = event.target.dataset.text;
@@ -83,11 +85,10 @@ const BaseTable = (props) => {
       <NavBar />
 
       <Container className="container">
-        {/* <h1 className="h1">{props.children}</h1> */}
-        <h1 className="h1">n1010SampleInformation</h1>
+        <h1 className="h1">{dbName}</h1>
         <span style={{ display: "none" }}>{updateView}</span>
         <Form className="form">
-        {/* <Form style={{ display: "inline-block", marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "50px", width: "70%", 
+          {/* <Form style={{ display: "inline-block", marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "50px", width: "70%", 
           textAlign: "left", border: "1px solid black", padding: "20px" }}> */}
           <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
           <Form.Row>
