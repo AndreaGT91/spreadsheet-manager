@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
@@ -12,15 +12,30 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 import NavBar from "../components/NavBar";
 import backgroundImage from "../images/ac512x512.png";
+import API from "../utils/API"
 import readSpreadsheet from "../utils/readSpreadsheet";
+
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState(null);
+  const [databases, setDatabases] = useState([{ baseName: "default" }]);
+
+  useEffect(() => {
+    getDBs()
+  }, [])
+
+  async function getDBs() {
+    await API.getBasesByUser(JSON.parse(localStorage.getItem("userID")))
+      .then(response => {
+        setDatabases(response.data)
+      })
+      .catch(() => { return [] });
+  };
 
   const handleClose = () => {
-      setFileName(null);
-      setShowModal(false);
+    setFileName(null);
+    setShowModal(false);
   };
 
   const handleShow = () => setShowModal(true);
@@ -30,15 +45,15 @@ const Dashboard = () => {
 
     if (fileName) {
       readSpreadsheet(fileName)
-      .then(response => {
-        // TODO: returns name of new base; need to take that and open it for display or add to list
-        console.log("Response: ", response);
-      })
-      .catch(error => {
-        console.log("Error reading file: ", error);
-        // TODO: Use something other than alert
-        alert(fileName.name + " is not a supported type of spreadsheet.");
-      });
+        .then(response => {
+          console.log("Response: ", response);
+          getDBs();
+        })
+        .catch(error => {
+          console.log("Error reading file: ", error);
+          // TODO: Use something other than alert
+          alert(fileName.name + " is not a supported type of spreadsheet.");
+        });
     }
     else {
       // TODO: Use something other than alert
@@ -64,12 +79,12 @@ const Dashboard = () => {
         alt="Build A Base Logo">
       </Image>
 
-      <Modal 
-        show={showModal} 
-        onHide={handleClose} 
+      <Modal
+        show={showModal}
+        onHide={handleClose}
         aria-labelledby="import-modal"
         centered
-        style={{ opacity:1 }}>
+        style={{ opacity: 1 }}>
 
         <Modal.Header closeButton>
           <Modal.Title id="import-modal">Import Spreadsheet</Modal.Title>
@@ -88,7 +103,7 @@ const Dashboard = () => {
         </Modal.Footer>
       </Modal>
 
-      <Container className="d-block mx-auto" style={{ marginTop:"-70%", width:"80%" }}>
+      <Container className="d-block mx-auto" style={{ marginTop: "-70%", width: "80%" }}>
         <Row>
           <Col>
             <h1>Your Databases</h1>
@@ -104,15 +119,11 @@ const Dashboard = () => {
           </Col>
         </Row>
         <ListGroup>
-          <ListGroup.Item>
-            <Link to="/BaseTable/n1010SampleInformation">n1010SampleInformation</Link>
-          </ListGroup.Item>
-          <ListGroup.Item disabled>
-            Other database
+          {databases.map(base => (
+            <ListGroup.Item key={base.baseName.toString()}>
+              <Link to={`/BaseTable/${base.baseName}`}>{base.baseName}</Link>
             </ListGroup.Item>
-          <ListGroup.Item disabled>
-            Another database
-            </ListGroup.Item>
+          ))}
         </ListGroup>
       </Container>
     </>

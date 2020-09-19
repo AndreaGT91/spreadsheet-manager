@@ -4,7 +4,7 @@ const db = require("../models");
 module.exports = {
   findByUserId: function(request, response) {
     db.Bases
-      .findOne({ creatorID: request.params.id })
+      .find({ creatorID: request.params.id })
       .then(dbModel => response.json(dbModel))
       .catch(error => response.status(422).json(error));
   },

@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Table, Form, Col, Button } from 'react-bootstrap';
-import NavBar2 from '../components/NavBar2';
-// import Image from 'react-bootstrap/Image';
-
-// import Upload5 from '../images/ac512x512.png';
-
-// import API from '../utils/API';
+import NavBar from '../components/NavBar';
+import API from '../utils/API';
 import './BaseTable.css';
-import test from "./test.json";
 
-const BaseTable = (props) => {
-  const [dataList, setDataList] = useState(test);
+const BaseTable = () => {
+  const dbName = window.location.pathname.split('/')[2]
+  const [dataList, setDataList] = useState("");
   // Dummy state, used to force re-render
   const [updateView, setUpdateView] = useState(0);
 
@@ -18,6 +14,7 @@ const BaseTable = (props) => {
   const noFilter = "No filter";
   const [filterSelect, setFilterSelect] = useState(noFilter);
   const [filterData, setFilterData] = useState("");
+  const [unfiltered, setUnfiltered] = useState("")
 
   // Load header array
   let headers = [];
@@ -25,23 +22,39 @@ const BaseTable = (props) => {
     headers.push(key);
   };
 
-  // async function getDataList(baseName) {
-  //   const response = await API.getCustom(baseName);
-  //   return response;
-  // await API.getCustom(props.children)
-  //   .then(response => { return response.data })
-  //   .catch(() => { return [] });
-  // };
+  useEffect(() => {
+    getDataList(dbName)
+  }, [])
 
-  // let dl = getDataList(props.children);
-  // const [dataList, setDataList] = useState(dl.data);
-  // console.log("dataList: ", dataList);
+  async function getDataList(baseName) {
+    await API.getCustom(baseName)
+      .then(response => {
+        for (let i = 0; i < response.data.length; i++) {
+          for (let k = 0; k < Object.keys(response.data[i]).length; k++) {
+            if (Object.keys(response.data[i])[k].startsWith("_")) {
+              let key = Object.keys(response.data[i])[k]
+
+              delete response.data[i][key]
+            }
+          }
+        }
+
+        setDataList(response.data)
+        setUnfiltered(response.data)
+      })
+      .catch(() => { return [] });
+  };
 
   function onColumnClick(event) {
     const colName = event.target.dataset.text;
     const dl = dataList; // Need to work with copy to use sort
 
     function compareItems(item1, item2) {
+      if (!isNaN(item1)) {
+        item1 = parseInt(item1)
+        item2 = parseInt(item2)
+      }
+
       if (item1 < item2) { return -1 }
       else if (item1 > item2) { return 1 }
       else { return 0 };
@@ -60,20 +73,21 @@ const BaseTable = (props) => {
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
-    setFilterData(event.target.value);
+    setFilterData(event.target.value.toLowerCase());
   };
 
   // When the form is submitted, load books matching the entered keyword(s)
   function handleFormSubmit(event) {
     event.preventDefault();
     if (filterSelect === noFilter) {
-      setDataList(test);
-    }
-    else {
+      setDataList(unfiltered);
+    } else if (filterData === "") {
+      setDataList(unfiltered);
+    } else {
       const dl = [];
 
-      test.forEach(item => {
-        if (item[filterSelect] === filterData) {
+      unfiltered.forEach(item => {
+        if (item[filterSelect].toLowerCase().includes(filterData.toLowerCase())) {
           dl.push(item);
         }
       });
@@ -82,24 +96,16 @@ const BaseTable = (props) => {
     };
   };
 
+
   return (
     <>
-      <NavBar2 />
-      {/* <Image style={{ 
-        width: "900px",
-        height: "900px",
-        opacity: "0.3",
-        marginTop: "1%",
+      <NavBar />
 
-        marginLeft: "15%",
-        position: "relative",
-      }} src={Upload5}></Image> */}
       <Container className="container">
-        {/* <h1 className="h1">{props.children}</h1> */}
-        <h1 className="h1">n1010SampleInformation</h1>
+        <h1 className="h1">{dbName}</h1>
         <span style={{ display: "none" }}>{updateView}</span>
         <Form className="form">
-        {/* <Form style={{ display: "inline-block", marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "50px", width: "70%", 
+          {/* <Form style={{ display: "inline-block", marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "50px", width: "70%", 
           textAlign: "left", border: "1px solid black", padding: "20px" }}> */}
           <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
           <Form.Row>
@@ -142,8 +148,8 @@ const BaseTable = (props) => {
             </tbody>
           </Table>
         ) : (
-          <h5>No data to display</h5>
-        )}
+            <h5>No data to display</h5>
+          )}
       </Container>
     </>
   )
