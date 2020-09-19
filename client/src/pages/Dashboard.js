@@ -15,18 +15,24 @@ import backgroundImage from "../images/ac512x512.png";
 import readSpreadsheet from "../utils/readSpreadsheet";
 
 const Dashboard = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showImport, setShowImport] = useState(false);
   const [fileName, setFileName] = useState(null);
 
-  const handleClose = () => {
-      setFileName(null);
-      setShowModal(false);
+  const handleCloseAlert = () => {
+    setAlertMessage("");
+    setShowAlert(false);
   };
 
-  const handleShow = () => setShowModal(true);
+  const handleShowImport = () => setShowImport(true);
+  const handleCloseImport = () => {
+      setFileName(null);
+      setShowImport(false);
+  };
 
   const handleFileSelect = () => {
-    setShowModal(false);
+    setShowImport(false);
 
     if (fileName) {
       readSpreadsheet(fileName)
@@ -36,13 +42,13 @@ const Dashboard = () => {
       })
       .catch(error => {
         console.log("Error reading file: ", error);
-        // TODO: Use something other than alert
-        alert(fileName.name + " is not a supported type of spreadsheet.");
+        setAlertMessage(fileName.name + " is not a supported type of spreadsheet.");
+        setShowAlert(true);
       });
     }
     else {
-      // TODO: Use something other than alert
-      alert("No file selected.");
+      setAlertMessage("No file selected.");
+      setShowAlert(true);
     };
 
     setFileName(null);
@@ -64,9 +70,29 @@ const Dashboard = () => {
         alt="Build A Base Logo">
       </Image>
 
+      {/* Modal for alerts */}
       <Modal 
-        show={showModal} 
-        onHide={handleClose} 
+        show={showAlert} 
+        onHide={handleCloseAlert}
+        aria-labelledby="alert-modal"
+        centered
+        style={{ opacity:1 }}>
+
+        <Modal.Header closeButton>
+          <Modal.Title>Build-A-Base Alert:</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{alertMessage}</Modal.Body>
+        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+          <Button variant="info" onClick={handleCloseAlert}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for importing spreadsheets */}
+      <Modal 
+        show={showImport} 
+        onHide={handleCloseImport} 
         aria-labelledby="import-modal"
         centered
         style={{ opacity:1 }}>
@@ -98,7 +124,7 @@ const Dashboard = () => {
               className="float-right"
               variant="info"
               style={{ marginTop: "20px" }}
-              onClick={handleShow}>
+              onClick={handleShowImport}>
               Import
             </Button>
           </Col>
