@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState(null);
   const [databases, setDatabases] = useState([{ baseName: "default" }]);
-  const [updateView, setUpdateView] = useState(0);
 
   useEffect(() => {
     getDBs()
