@@ -30,7 +30,7 @@ function NavBar(props) {
     <>
       {/* <Navbar fixed="top" expand="lg" bg="dark" variant="dark"> */}
       <Navbar style={{ height: "10%" }} sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/Dashboard" className="align-middle">
+        <Navbar.Brand href="/Dashboard" className="align-middle" style={{ display: "flex", alignItems: "center" }}>
           <img
             src={Logo}
             width="87"
@@ -48,11 +48,11 @@ function NavBar(props) {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Nav className="mx-auto">
-            <Nav.Link href="/Dashboard" className="align-middle">Dashboard</Nav.Link>
-            <Navbar.Text>
-              Welcome {userName}
+            <Navbar.Text style={{ fontStyle: "italic" }}>
+              Welcome, {userName}
             </Navbar.Text>
-            <Nav.Link className="align-middle justify-content-end" onClick={handleLogoutClick}>Logout</Nav.Link>
+            <Nav.Link href="/Dashboard" style={{ marginTop: "15px", marginBottom: "15px" }}>Dashboard</Nav.Link>
+            <Nav.Link style={{ marginTop: "15px", marginBottom: "15px" }} onClick={handleLogoutClick}>Logout</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
