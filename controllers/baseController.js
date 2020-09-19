@@ -4,7 +4,7 @@ const db = require("../models");
 module.exports = {
   findByUserId: function(request, response) {
     db.Bases
-      .findOne({ creatorID: request.params.id })
+      .find({ creatorID: request.params.id })
       .then(dbModel => response.json(dbModel))
       .catch(error => response.status(422).json(error));
   },
@@ -36,10 +36,3 @@ module.exports = {
       .catch(error => response.status(422).json(error));
   }
 };
-
-// mongoose.connection.db.listCollections({name: 'mycollectionname'})
-//     .next(function(err, collinfo) {
-//         if (collinfo) {
-//             // The collection exists
-//         }
-//     });

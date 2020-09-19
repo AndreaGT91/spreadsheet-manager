@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const baseSchema = new Schema({
   creatorID: { type: Schema.Types.ObjectId, required: true },
   baseName: { type: String, required: true },
+  baseTitle: { type: String, required: true },
   model: [{
     fieldName: String,
     fieldType: { 

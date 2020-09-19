@@ -77,8 +77,8 @@ const BaseTable = () => {
   };
 
   // When the form is submitted, load books matching the entered keyword(s)
-function handleFormSubmit(event) {
-     event.preventDefault();
+  function handleFormSubmit(event) {
+    event.preventDefault();
     if (filterSelect === noFilter) {
       setDataList(unfiltered);
     } else if (filterData === "") {
@@ -148,8 +148,8 @@ function handleFormSubmit(event) {
             </tbody>
           </Table>
         ) : (
-          <h5>No data to display</h5>
-        )}
+            <h5>No data to display</h5>
+          )}
       </Container>
     </>
   )
