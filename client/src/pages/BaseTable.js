@@ -49,7 +49,14 @@ const BaseTable = (props) => {
     const dl = dataList; // Need to work with copy to use sort
 
     function compareItems(item1, item2) {
-      if (item1 < item2) { return -1 }
+      if (!isNaN(item1)) {
+        item1 = parseInt(item1)
+        item2 = parseInt(item2)
+      }
+
+      if (item1 < item2) { 
+        console.log(typeof item1)
+        return -1 }
       else if (item1 > item2) { return 1 }
       else { return 0 };
     };
