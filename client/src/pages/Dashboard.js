@@ -15,25 +15,19 @@ import API from "../utils/API"
 const Dashboard = () => {
   const [databases, setDatabases] = useState([{ baseName: "testing" }]);
 
-  // useEffect(() => {
-  //   async function getDBS() {
-  //     try {
-  //       const results = await API.getBasesByUser(JSON.parse(localStorage.getItem("userID")))
-  //       console.log(results)
-  //       setDatabases(results.data);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  useEffect(() => {
+    getDBs()
+  }, [])
+ 
+  async function getDBs() {
+    await API.getBasesByUser(JSON.parse(localStorage.getItem("userID")))
+      .then(response => {
+        setDatabases(JSON.parse(response.data))
+      })
+      .catch(() => { return [] });
+  };
 
-  //   getDBS()
-  // }, [])
-
-  // async function getDBs() {
-  //   const results = await API.getBasesByUser(JSON.parse(localStorage.getItem("userID")))
-  //   console.log(results.data)
-  //   return results
-  // }
+  console.log("databases: ", databases)
 
   return (
     <>
@@ -55,15 +49,6 @@ const Dashboard = () => {
               <Link to={`/BaseTable/${base.baseName}`}>{base.baseName}</Link>
             </ListGroup.Item>
           ))}
-          {/* <ListGroup.Item>
-            <Link to="/BaseTable/n1010SampleInformation">n1010SampleInformation</Link>
-          </ListGroup.Item> */}
-          <ListGroup.Item disabled>
-            Other database
-            </ListGroup.Item>
-          <ListGroup.Item disabled>
-            Another database
-            </ListGroup.Item>
         </ListGroup>
       </Container>
     </>
