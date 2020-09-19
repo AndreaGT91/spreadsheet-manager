@@ -29,7 +29,16 @@ const BaseTable = (props) => {
   async function getDataList(baseName) {
     await API.getCustom(baseName)
       .then(response => {
-        console.log(response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          for (let k = 0; k < Object.keys(response.data[i]).length; k++) {
+            if (Object.keys(response.data[i])[k].startsWith("_")) {
+              let key = Object.keys(response.data[i])[k]
+
+              delete response.data[i][key]
+            }
+          }
+        }
+
         setDataList(response.data)
       })
       .catch(() => { return [] });
