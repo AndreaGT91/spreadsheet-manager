@@ -48,7 +48,7 @@ function App() {
             <Route exact path="/Login"><Login /></Route>
             <Route exact path="/SignUp"><SignUp /></Route>
             <Route exact path="/ForgotPassword"><ForgotPassword /></Route>
-            <Route exact path="/BaseTable/:basename"><BaseTable /></Route>
+            <PrivateRoute exact path="/BaseTable/:basename" component={BaseTable} />
             <PrivateRoute exact path="/Dashboard" component={Dashboard} />
             <Route path="/*"><Login /></Route>
           </Switch>

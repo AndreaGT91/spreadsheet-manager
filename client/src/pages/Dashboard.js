@@ -8,7 +8,9 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
+// import ListGroup from "react-bootstrap/ListGroup";
+import Card from "react-bootstrap/Card";
+import CardColumns from "react-bootstrap/CardColumns";
 
 import NavBar from "../components/NavBar";
 import backgroundImage from "../images/ac512x512.png";
@@ -42,8 +44,8 @@ const Dashboard = () => {
 
   const handleShowImport = () => setShowImport(true);
   const handleCloseImport = () => {
-      setFileName(null);
-      setShowImport(false);
+    setFileName(null);
+    setShowImport(false);
   };
 
   const handleFileSelect = () => {
@@ -51,15 +53,15 @@ const Dashboard = () => {
 
     if (fileName) {
       readSpreadsheet(fileName)
-      .then(response => {
-        console.log("Response: ", response);
-        getDBs();
-      })
-      .catch(error => {
-        console.log("Error reading file: ", error);
-        setAlertMessage(fileName.name + " is not a supported type of spreadsheet.");
-        setShowAlert(true);
-      });
+        .then(response => {
+          console.log("Response: ", response);
+          getDBs();
+        })
+        .catch(error => {
+          console.log("Error reading file: ", error);
+          setAlertMessage(fileName.name + " is not a supported type of spreadsheet.");
+          setShowAlert(true);
+        });
     }
     else {
       setAlertMessage("No file selected.");
@@ -86,12 +88,12 @@ const Dashboard = () => {
       </Image>
 
       {/* Modal for alerts */}
-      <Modal 
-        show={showAlert} 
+      <Modal
+        show={showAlert}
         onHide={handleCloseAlert}
         aria-labelledby="alert-modal"
         centered
-        style={{ opacity:1 }}>
+        style={{ opacity: 1 }}>
 
         <Modal.Header closeButton>
           <Modal.Title>Build-A-Base Alert:</Modal.Title>
@@ -105,9 +107,9 @@ const Dashboard = () => {
       </Modal>
 
       {/* Modal for importing spreadsheets */}
-      <Modal 
-        show={showImport} 
-        onHide={handleCloseImport} 
+      <Modal
+        show={showImport}
+        onHide={handleCloseImport}
         aria-labelledby="import-modal"
         centered
         style={{ opacity: 1 }}>
@@ -144,13 +146,16 @@ const Dashboard = () => {
             </Button>
           </Col>
         </Row>
-        <ListGroup>
+        <CardColumns>
           {databases.map(base => (
-            <ListGroup.Item key={base.baseName.toString()}>
-              <Link to={`/BaseTable/${base.baseName}`}>{base.baseName}</Link>
-            </ListGroup.Item>
+            <Card key={base.baseName} className="p-3">
+              <Card.Link href={`/BaseTable/${base.baseName}`}>
+                <Card.Title>{base.baseName}</Card.Title>
+                <Card.Text>{base.baseTitle}</Card.Text>
+              </Card.Link>
+            </Card>
           ))}
-        </ListGroup>
+        </CardColumns>
       </Container>
     </>
   )
