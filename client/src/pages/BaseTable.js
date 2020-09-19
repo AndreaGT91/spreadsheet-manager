@@ -3,9 +3,8 @@ import { Container, Table, Form, Col, Button } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
 import API from '../utils/API';
 import './BaseTable.css';
-import test from "./test.json";
 
-const BaseTable = (props) => {
+const BaseTable = () => {
   const dbName = window.location.pathname.split('/')[2]
   const [dataList, setDataList] = useState("");
   // Dummy state, used to force re-render
@@ -15,6 +14,7 @@ const BaseTable = (props) => {
   const noFilter = "No filter";
   const [filterSelect, setFilterSelect] = useState(noFilter);
   const [filterData, setFilterData] = useState("");
+  const [unfiltered, setUnfiltered] = useState("")
 
   // Load header array
   let headers = [];
@@ -40,6 +40,7 @@ const BaseTable = (props) => {
         }
 
         setDataList(response.data)
+        setUnfiltered(response.data)
       })
       .catch(() => { return [] });
   };
@@ -54,9 +55,7 @@ const BaseTable = (props) => {
         item2 = parseInt(item2)
       }
 
-      if (item1 < item2) { 
-        console.log(typeof item1)
-        return -1 }
+      if (item1 < item2) { return -1 }
       else if (item1 > item2) { return 1 }
       else { return 0 };
     };
@@ -78,16 +77,17 @@ const BaseTable = (props) => {
   };
 
   // When the form is submitted, load books matching the entered keyword(s)
-  function handleFormSubmit(event) {
-    event.preventDefault();
+function handleFormSubmit(event) {
+     event.preventDefault();
     if (filterSelect === noFilter) {
-      setDataList(test);
-    }
-    else {
+      setDataList(unfiltered);
+    } else if (filterData === "") {
+      setDataList(unfiltered);
+    } else {
       const dl = [];
 
-      test.forEach(item => {
-        if (item[filterSelect].toLowerCase() === filterData) {
+      unfiltered.forEach(item => {
+        if (item[filterSelect].toLowerCase().includes(filterData.toLowerCase())) {
           dl.push(item);
         }
       });
@@ -95,6 +95,7 @@ const BaseTable = (props) => {
       setDataList(dl);
     };
   };
+
 
   return (
     <>
