@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Container, Table, Form, Col, Button, Image } from "react-bootstrap";
+import { Container, Table, Form, Col, Button } from "react-bootstrap";
+// import Image from "react-bootstrap/Image";
 
 import NavBar from "../components/NavBar";
 import API from "../utils/API";
-import backgroundImage from "../images/ac512x512.png";
+// import backgroundImage from "../images/ac512x512.png";
 import "./BaseTable.css";
 
 const BaseTable = () => {
@@ -101,12 +102,12 @@ const BaseTable = () => {
   return (
     <>
       <NavBar />
-      <Image
+      {/* <Image
         className="d-block mx-auto img-fluid w-75"
         style={{ opacity: "0.3" }}
         src={backgroundImage}
         alt="Build A Base Logo">
-      </Image>
+      </Image> */}
 
       <Container className="d-block mx-auto container">
         <h1 className="h1">{dbName}</h1>
@@ -138,7 +139,8 @@ const BaseTable = () => {
             <thead>
               <tr>
                 {headers.map((header, index) => (
-                  <th key={index} className="th" data-text={header} onClick={onColumnClick}>{header}</th>
+                  <th key={index} className="th" data-text={header} onClick={onColumnClick} 
+                    scope="col" tabindex="0">{header}</th>
                 ))}
               </tr>
             </thead>
