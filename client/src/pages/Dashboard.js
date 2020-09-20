@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
@@ -8,7 +7,6 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import CardColumns from "react-bootstrap/CardColumns";
 
@@ -32,7 +30,7 @@ const Dashboard = () => {
   async function getDBs() {
     await API.getBasesByUser(JSON.parse(localStorage.getItem("userID")))
       .then(response => {
-        setDatabases(response.data)
+        setDatabases(response.data);
       })
       .catch(() => { return [] });
   };
@@ -54,7 +52,6 @@ const Dashboard = () => {
     if (fileName) {
       readSpreadsheet(fileName)
         .then(response => {
-          console.log("Response: ", response);
           getDBs();
         })
         .catch(error => {
@@ -100,7 +97,7 @@ const Dashboard = () => {
         </Modal.Header>
         <Modal.Body>{alertMessage}</Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="info" onClick={handleCloseAlert}>
+          <Button variant="success" onClick={handleCloseAlert}>
             Close
           </Button>
         </Modal.Footer>
@@ -125,7 +122,7 @@ const Dashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="info" onClick={handleFileSelect}>
+          <Button variant="success" onClick={handleFileSelect}>
             Import
           </Button>
         </Modal.Footer>
@@ -134,12 +131,12 @@ const Dashboard = () => {
       <Container className="d-block mx-auto" style={{ marginTop: "-70%", width: "80%" }}>
         <Row>
           <Col>
-            <h1>Your Databases</h1>
+            <h1 className="float-left">Your Databases</h1>
           </Col>
           <Col>
             <Button
               className="float-right"
-              variant="info"
+              variant="success"
               style={{ marginTop: "20px" }}
               onClick={handleShowImport}>
               Import
@@ -148,10 +145,15 @@ const Dashboard = () => {
         </Row>
         <CardColumns>
           {databases.map(base => (
-            <Card key={base.baseName} className="p-3">
-              <Card.Link href={`/BaseTable/${base.baseName}`}>
-                <Card.Title>{base.baseName}</Card.Title>
-                <Card.Text>{base.baseTitle}</Card.Text>
+            <Card key={base.baseName} className="p-3" bg="info">
+            {/* <Card key={base.baseName} className="p-3" style={{ backgroundColor:"#85cd52" }}> */}
+            {/* <Card key={base.baseName} className="p-3" style={{ backgroundColor:"#0dbaba" }}> */}
+              <Card.Link href={`/BaseTable/${base.baseName}`} style={{ color:"white" }}>
+                <Card.Title className="font-weight-bold">{base.baseTitle}</Card.Title>
+                <Card.Text className="font-weight-lighter">{base.baseName}</Card.Text>
+                <Card.Text className="font-weight-lighter font-italic">
+                  Created on: {(new Date(base.creationDate)).toLocaleDateString()}
+                </Card.Text>
               </Card.Link>
             </Card>
           ))}

@@ -170,7 +170,7 @@ const SignUp = (props) => {
               </Form.Group>
             </Form.Row>
             <hr />
-            <Button className="d-block mx-auto" type="submit">
+            <Button className="d-block mx-auto" variant="success" type="submit">
               Create Account
             </Button>          
           </Form>
