@@ -195,20 +195,23 @@ const readSpreadsheet = async function(fileName) {
                 return API.createCustom(newBase.baseName, newBase.model, jsonData);
               })
               .then(() => { result = newBase.baseName })
-              .catch(error => {
-                // If payload too large, add one row at a time; any other error, delete entry in Base collection
+              .catch( async error => {
+                // If payload too large, add one row at a time; any other error, delete entry in Bases collection
                 if (error.response.status === 413) {
                   for (let i=0; i<jsonData.length; i++) {
                     API.createCustom(newBase.baseName, newBase.model, jsonData[i]);
                   };
                 }
                 else {
-                  API.deleteBase(newBase.baseName);
-                  throw(error); // Pass error on to caller
+                  await API.deleteBase(newBase.baseName)
+                  .then(() => { throw error }); // Pass error on to caller
                 };
               });
             });
-          }; // end jsonData.length > 0
+          } // end jsonData.length > 0
+          else {
+            throw new Error("Error converting spreadsheet data");
+          };
         } // end workbook.SheetNames.length > 0
         else {
           throw new Error("No data in spreadsheet");
