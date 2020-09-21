@@ -30,8 +30,8 @@ export default {
     return axios.put("/api/base", baseData);
   },
 
-  deleteBase: function(id) {
-    return axios.delete("/api/base/" + id);
+  deleteBase: function(name) {
+    return axios.delete("/api/base/name/" + name);
   },
 
   getCustom: async function(baseName) {
@@ -43,16 +43,14 @@ export default {
       else { return [] }
   },
 
-  createCustom: async function(baseName, baseData) {
-    const response = await this.getBaseByName(baseName);
-    if (!response.data) { return response }
-    return axios.post("/api/custom/" + baseName, { baseModel: response.data.model, data: baseData });
+  createCustom: function(baseName, baseModel, baseData) {
+    return axios.post("/api/custom/" + baseName, { model: baseModel, data: baseData });
   },
 
   updateCustom: async function(baseName, baseData) {
     const response = await this.getBaseByName(baseName);
     if (!response.data) { return response }
-    return axios.put("/api/custom/" + baseName, { baseModel: response.data.model, data: baseData });
+    return axios.put("/api/custom/" + baseName, { model: response.data.model, data: baseData });
   },
 
   deleteCustom: async function(baseName, id) {

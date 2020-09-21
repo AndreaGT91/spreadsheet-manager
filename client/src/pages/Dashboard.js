@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Image from "react-bootstrap/Image";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import CardColumns from "react-bootstrap/CardColumns";
+import { Image, Modal, Form, Button, Container, Row, Col, Card, CardColumns } from "react-bootstrap";
 
 import NavBar from "../components/NavBar";
 import backgroundImage from "../images/ac512x512.png";
@@ -56,7 +48,17 @@ const Dashboard = () => {
         })
         .catch(error => {
           console.log("Error reading file: ", error);
-          setAlertMessage(fileName.name + " is not a supported type of spreadsheet.");
+          
+          // Errors come back as different types of objects
+          let msg = "";
+          if (error.message) {
+            msg = ": " + error.message;
+          }
+          else if ((error.response) && (error.response.statusText)) {
+            msg = ": " + error.response.statusText;
+          };
+
+          setAlertMessage("Error importing " + fileName.name + msg);
           setShowAlert(true);
         });
     }
@@ -146,8 +148,6 @@ const Dashboard = () => {
         <CardColumns>
           {databases.map(base => (
             <Card key={base.baseName} className="p-3" bg="info">
-            {/* <Card key={base.baseName} className="p-3" style={{ backgroundColor:"#85cd52" }}> */}
-            {/* <Card key={base.baseName} className="p-3" style={{ backgroundColor:"#0dbaba" }}> */}
               <Card.Link href={`/BaseTable/${base.baseName}`} style={{ color:"white" }}>
                 <Card.Title className="font-weight-bold">{base.baseTitle}</Card.Title>
                 <Card.Text className="font-weight-lighter">{base.baseName}</Card.Text>

@@ -30,8 +30,7 @@ module.exports = {
   },
   remove: function(request, response) {
     db.Bases
-      .findById({ _id: request.params.id })
-      .then(dbModel => dbModel.remove())
+      .deleteOne({ baseName: request.params.name })
       .then(dbModel => response.json(dbModel))
       .catch(error => response.status(422).json(error));
   }

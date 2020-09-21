@@ -8,11 +8,11 @@ router.route("/")
 
 // Matches with "/api/base/id/:id"
 router.route("/id/:id")
-  .get(baseController.findByUserId)
-  .delete(baseController.remove);
+  .get(baseController.findByUserId);
 
 // Matches with "/api/base/name/:name"
 router.route("/name/:name")
-  .get(baseController.findByName);
+  .get(baseController.findByName)
+  .delete(baseController.remove);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-import axios from "axios";
 import XLSX from "xlsx";
 import API from "./API";
 
@@ -192,11 +191,31 @@ const readSpreadsheet = async function(fileName) {
 
               // Add entry to Bases collection, then add records to new custom collection
               await API.createBase(newBase)
-              .then(() => { return axios.post("/api/custom/" + newBase.baseName, { baseModel: newBase.model, data: jsonData })})
-              .then(() => { result = newBase.baseName });
+              .then(() => { 
+                return API.createCustom(newBase.baseName, newBase.model, jsonData);
+              })
+              .then(() => { result = newBase.baseName })
+              .catch( async error => {
+                // If payload too large, add one row at a time; any other error, delete entry in Bases collection
+                if (error.response.status === 413) {
+                  for (let i=0; i<jsonData.length; i++) {
+                    API.createCustom(newBase.baseName, newBase.model, jsonData[i]);
+                  };
+                }
+                else {
+                  await API.deleteBase(newBase.baseName)
+                  .then(() => { throw error }); // Pass error on to caller
+                };
+              });
             });
-          }; // end jsonData.length > 0
-        }; // end workbook.SheetNames.length > 0
+          } // end jsonData.length > 0
+          else {
+            throw new Error("Error converting spreadsheet data");
+          };
+        } // end workbook.SheetNames.length > 0
+        else {
+          throw new Error("No data in spreadsheet");
+        };
       } // end try
       catch(error) {
         success = false;
