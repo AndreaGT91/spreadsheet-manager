@@ -140,7 +140,7 @@ const BaseTable = () => {
               <tr>
                 {headers.map((header, index) => (
                   <th key={index} className="th" data-text={header} onClick={onColumnClick} 
-                    scope="col" tabindex="0">{header}</th>
+                    scope="col" tabIndex="0">{header}</th>
                 ))}
               </tr>
             </thead>

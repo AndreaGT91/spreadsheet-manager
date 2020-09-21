@@ -56,7 +56,16 @@ const Dashboard = () => {
         })
         .catch(error => {
           console.log("Error reading file: ", error);
-          setAlertMessage(fileName.name + " is not a supported type of spreadsheet.");
+          
+          let msg = "";
+          if (error.message) {
+            msg = ": " + error.message;
+          }
+          else if ((error.response) && (error.response.statusText)) {
+            msg = ": " + error.response.statusText;
+          };
+
+          setAlertMessage("Error importing " + fileName.name + msg);
           setShowAlert(true);
         });
     }
