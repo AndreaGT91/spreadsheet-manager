@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const baseSchema = new Schema({
   creatorID: { type: Schema.Types.ObjectId, required: true },
+  creationDate: { type: Date, default: Date.now },
   baseName: { type: String, required: true },
   baseTitle: { type: String, required: true },
   model: [{

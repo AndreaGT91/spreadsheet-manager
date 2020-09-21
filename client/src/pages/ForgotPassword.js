@@ -126,7 +126,7 @@ const ForgotPassword = (props) => {
             </Form.Group>
 
             <hr />
-            <Button className="d-block mx-auto" type="submit">
+            <Button className="d-block mx-auto" variant="success" type="submit">
               Save Password
             </Button>
           </Form>

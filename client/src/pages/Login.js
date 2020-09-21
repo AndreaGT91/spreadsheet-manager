@@ -111,7 +111,7 @@ const Login = (props) => {
             <Link to="/ForgotPassword">Forgot Password?</Link>
             <Link to="/SignUp" style={{ float: "right" }}>New User?</Link>
             <hr />
-            <Button className="d-block mx-auto" type="submit">
+            <Button className="d-block mx-auto" variant="success" type="submit">
               Login
             </Button>
           </Form>

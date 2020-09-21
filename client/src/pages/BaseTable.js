@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Table, Form, Col, Button } from 'react-bootstrap';
-import NavBar from '../components/NavBar';
-import API from '../utils/API';
-import './BaseTable.css';
+import React, { useState, useEffect } from "react";
+import { Container, Table, Form, Col, Button } from "react-bootstrap";
+// import Image from "react-bootstrap/Image";
+
+import NavBar from "../components/NavBar";
+import API from "../utils/API";
+// import backgroundImage from "../images/ac512x512.png";
+import "./BaseTable.css";
 
 const BaseTable = () => {
-  const dbName = window.location.pathname.split('/')[2]
+  const dbName = window.location.pathname.split("/")[2]
   const [dataList, setDataList] = useState("");
   // Dummy state, used to force re-render
   const [updateView, setUpdateView] = useState(0);
@@ -24,7 +27,7 @@ const BaseTable = () => {
 
   useEffect(() => {
     getDataList(dbName)
-  }, [])
+  }, [dbName]);
 
   async function getDataList(baseName) {
     await API.getCustom(baseName)
@@ -96,17 +99,20 @@ const BaseTable = () => {
     };
   };
 
-
   return (
     <>
       <NavBar />
+      {/* <Image
+        className="d-block mx-auto img-fluid w-75"
+        style={{ opacity: "0.3" }}
+        src={backgroundImage}
+        alt="Build A Base Logo">
+      </Image> */}
 
-      <Container className="container">
+      <Container className="d-block mx-auto container">
         <h1 className="h1">{dbName}</h1>
         <span style={{ display: "none" }}>{updateView}</span>
         <Form className="form">
-          {/* <Form style={{ display: "inline-block", marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "50px", width: "70%", 
-          textAlign: "left", border: "1px solid black", padding: "20px" }}> */}
           <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
           <Form.Row>
             <Form.Group as={Col} controlId="formFilter.ControlSelect">
@@ -124,16 +130,17 @@ const BaseTable = () => {
                 placeholder="Enter value to filter on" />
             </Form.Group>
           </Form.Row>
-          <Button variant="primary" type="submit" className="float-right" style={{ backgroundColor: "#ff9000" }}
+          <Button variant="success" type="submit" className="float-right"
             onClick={handleFormSubmit}>Filter</Button>
         </Form>
-        <p style={{ textAlign: "center" }}>Click on column heading to sort by that column</p>
+        <h4 style={{ textAlign: "center" }}>Click on column heading to sort by that column</h4>
         {dataList.length ? (
           <Table responsive striped bordered hover size="sm">
             <thead>
               <tr>
                 {headers.map((header, index) => (
-                  <th key={index} className="th" data-text={header} onClick={onColumnClick}>{header}</th>
+                  <th key={index} className="th" data-text={header} onClick={onColumnClick} 
+                    scope="col" tabIndex="0">{header}</th>
                 ))}
               </tr>
             </thead>
@@ -148,8 +155,8 @@ const BaseTable = () => {
             </tbody>
           </Table>
         ) : (
-            <h5>No data to display</h5>
-          )}
+          <h5>No data to display</h5>
+        )}
       </Container>
     </>
   )
