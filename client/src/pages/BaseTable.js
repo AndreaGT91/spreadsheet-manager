@@ -22,7 +22,9 @@ const BaseTable = () => {
   // Load header array
   let headers = [];
   for (let key in dataList[0]) {
-    headers.push(key);
+    if (!key.includes("_EMPTY")) {
+      headers.push(key);
+    }
   };
 
   useEffect(() => {
@@ -114,56 +116,56 @@ const BaseTable = () => {
         <span style={{ display: "none" }}>{updateView}</span>
 
         <Card className="d-block mx-auto form">
-        <Card.Body>
-        <Form>
-          <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
-          <Form.Row>
-            <Form.Group as={Col} controlId="formFilter.ControlSelect">
-              <Form.Label>Column to filter on:</Form.Label>
-              <Form.Control as="select" onChange={handleSelectChange} style={{ height: "50px" }}>
-                <option key={0} value={noFilter}>{noFilter}</option>
-                {headers.map((header, index) => (
-                  <option key={index + 1} value={header}>{header}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group as={Col} controlId="formFilter.ControlInput">
-              <Form.Label>Value to filter on:</Form.Label>
-              <Form.Control type="text" name="filter" onChange={handleInputChange} style={{ paddingLeft: "10px" }}
-                placeholder="Enter value to filter on" />
-            </Form.Group>
-          </Form.Row>
-          <Button variant="success" type="submit" className="float-right formBtn"
-            onClick={handleFormSubmit}>Filter</Button>
-        </Form>
-        </Card.Body>
+          <Card.Body>
+            <Form>
+              <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formFilter.ControlSelect">
+                  <Form.Label>Column to filter on:</Form.Label>
+                  <Form.Control as="select" onChange={handleSelectChange} style={{ height: "50px" }}>
+                    <option key={0} value={noFilter}>{noFilter}</option>
+                    {headers.map((header, index) => (
+                      <option key={index + 1} value={header}>{header}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group as={Col} controlId="formFilter.ControlInput">
+                  <Form.Label>Value to filter on:</Form.Label>
+                  <Form.Control type="text" name="filter" onChange={handleInputChange} style={{ paddingLeft: "10px" }}
+                    placeholder="Enter value to filter on" />
+                </Form.Group>
+              </Form.Row>
+              <Button variant="success" type="submit" className="float-right formBtn"
+                onClick={handleFormSubmit}>Filter</Button>
+            </Form>
+          </Card.Body>
         </Card>
 
         <h4 style={{ textAlign: "center" }}>Click on column heading to sort by that column</h4>
         <Card>
-        {dataList.length ? (
-          <Table responsive striped bordered hover size="sm" style={{ opacity: "1" }}>
-            <thead>
-              <tr>
-                {headers.map((header, index) => (
-                  <th key={index} className="th" data-text={header} onClick={onColumnClick} 
-                    scope="col" tabIndex="0">{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {dataList.map((objData, index) => (
-                <tr key={index}>
-                  {Object.keys(objData).map((objKey, i) => (
-                    <td key={i}>{objData[objKey]}</td>
+          {dataList.length ? (
+            <Table responsive striped bordered hover size="sm" style={{ opacity: "1" }}>
+              <thead>
+                <tr>
+                  {headers.map((header, index) => (
+                    <th key={index} className="th" data-text={header} onClick={onColumnClick}
+                      scope="col" tabIndex="0">{header}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          <h5>No data to display</h5>
-        )}
+              </thead>
+              <tbody>
+                {dataList.map((objData, index) => (
+                  <tr key={index}>
+                    {Object.keys(objData).map((objKey, i) => (
+                      <td key={i}>{objData[objKey]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+              <h5>No data to display</h5>
+            )}
         </Card>
       </Container>
     </>
