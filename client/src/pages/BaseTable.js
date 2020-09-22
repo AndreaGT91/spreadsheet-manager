@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Container, Table, Form, Col, Button } from "react-bootstrap";
-// import Image from "react-bootstrap/Image";
+import { Container, Table, Form, Col, Button, Card } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 
 import NavBar from "../components/NavBar";
 import API from "../utils/API";
-// import backgroundImage from "../images/ac512x512.png";
+import backgroundImage from "../images/ac512x512.png";
 import "./BaseTable.css";
 
 const BaseTable = () => {
@@ -102,17 +102,20 @@ const BaseTable = () => {
   return (
     <>
       <NavBar />
-      {/* <Image
+      <Image
         className="d-block mx-auto img-fluid w-75"
         style={{ opacity: "0.3" }}
         src={backgroundImage}
         alt="Build A Base Logo">
-      </Image> */}
+      </Image>
 
-      <Container className="d-block mx-auto container">
+      <Container className="d-block mx-auto container" style={{ marginTop: "-70%", width: "80%" }}>
         <h1 className="h1">{dbName}</h1>
         <span style={{ display: "none" }}>{updateView}</span>
-        <Form className="form">
+
+        <Card className="d-block mx-auto form">
+        <Card.Body>
+        <Form>
           <h4 style={{ marginBottom: "20px" }}>Filter Data</h4>
           <Form.Row>
             <Form.Group as={Col} controlId="formFilter.ControlSelect">
@@ -130,12 +133,16 @@ const BaseTable = () => {
                 placeholder="Enter value to filter on" />
             </Form.Group>
           </Form.Row>
-          <Button variant="success" type="submit" className="float-right"
+          <Button variant="success" type="submit" className="float-right formBtn"
             onClick={handleFormSubmit}>Filter</Button>
         </Form>
+        </Card.Body>
+        </Card>
+
         <h4 style={{ textAlign: "center" }}>Click on column heading to sort by that column</h4>
+        <Card>
         {dataList.length ? (
-          <Table responsive striped bordered hover size="sm">
+          <Table responsive striped bordered hover size="sm" style={{ opacity: "1" }}>
             <thead>
               <tr>
                 {headers.map((header, index) => (
@@ -157,6 +164,7 @@ const BaseTable = () => {
         ) : (
           <h5>No data to display</h5>
         )}
+        </Card>
       </Container>
     </>
   )
