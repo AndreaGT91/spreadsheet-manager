@@ -93,7 +93,7 @@ const SignUp = (props) => {
                     invalid: errors.firstName
                   })}
                 />
-                <span className="red-text">{errors.firstName}</span>
+                <span className="text-danger">{errors.firstName}</span>
               </Form.Group>
 
               <Form.Group as={Col} controlId="lastName">
@@ -109,7 +109,7 @@ const SignUp = (props) => {
                     invalid: errors.lastName
                   })}
                 />
-                <span className="red-text">{errors.lastName}</span>
+                <span className="text-danger">{errors.lastName}</span>
               </Form.Group>
             </Form.Row>
 
@@ -127,7 +127,7 @@ const SignUp = (props) => {
                     invalid: errors.email
                   })}
                 />
-                <span className="red-text">{errors.email}</span>
+                <span className="text-danger">{errors.email}</span>
                 <Form.Text className="text-muted">
                   We'll never share your email with anyone else.
                 </Form.Text>
@@ -148,7 +148,7 @@ const SignUp = (props) => {
                     invalid: errors.password
                   })}
                 />
-                <span className="red-text">{errors.password}</span>
+                <span className="text-danger">{errors.password}</span>
               </Form.Group>
             </Form.Row>
 
@@ -166,7 +166,7 @@ const SignUp = (props) => {
                     invalid: errors.password2
                   })}
                 />
-                <span className="red-text">{errors.password2}</span>
+                <span className="text-danger">{errors.password2}</span>
               </Form.Group>
             </Form.Row>
             <hr />

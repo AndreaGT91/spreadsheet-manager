@@ -83,7 +83,7 @@ const Login = (props) => {
                   invalid: errors.email || errors.emailnotfound
                 })}
               />
-              <span className="red-text">
+              <span className="text-danger">
                 {errors.email}
                 {errors.emailnotfound}
               </span>
@@ -102,7 +102,7 @@ const Login = (props) => {
                   invalid: errors.password || errors.passwordincorrect
                 })}
               />
-              <span className="red-text">
+              <span className="text-danger">
                 {errors.password}
                 {errors.passwordincorrect}
               </span>
