@@ -5,10 +5,10 @@ Build-A-Base extension - allows users to create MongDB collections from spreadsh
 Builds a MongoDB collections from user-supplied spreadsheets
 
 ## GitHub Repository
-[github.com/AndreaGT91/Build-A-Base](https://github.com/AndreaGT91/Build-A-Base)
+[github.com/AndreaGT91/spreadsheet-manager](https://github.com/AndreaGT91/spreadsheet-manager)
 
 ## Heroku Deployment
-[build-a-base.herokuapp.com/](https://build-a-base.herokuapp.com/)
+[spreadsheet-manager.herokuapp.com](https://spreadsheet-manager.herokuapp.com/)
 
 ## Installation 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 

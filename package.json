@@ -9,8 +9,8 @@
     "url": "https://github.com/AndreaGT91/spreadsheet-manager.git"
   },
   "engines": {
-    "node": ">14.0.0",
-    "npm": ">6.0.0"
+    "node": "12.x",
+    "npm": "6.x"
   },
   "main": "server.js",
   "scripts": {
@@ -22,15 +22,13 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
-  "author": "Bentley/Jones",
+  "author": "Andrea Bentley/Katherine Jones",
   "contributors": [
     {
-      "name": "Andrea Bentley",
-      "url": "http://bentleytech.com"
+      "name": "Isaiah P. Kelly"
     },
     {
-      "name": "Katherine Jones",
-      "url": "https://thedevkat.com/"
+      "name": "Robert 'Bobby' Philizaire"
     }
   ],
   "license": "MIT",
