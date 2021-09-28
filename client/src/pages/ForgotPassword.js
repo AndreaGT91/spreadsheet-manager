@@ -87,7 +87,7 @@ const ForgotPassword = (props) => {
                   invalid: errors.email || errors.emailnotfound
                 })}
               />
-              <span className="red-text">
+              <span className="text-danger">
                 {errors.email}
                 {errors.emailnotfound}
               </span>
@@ -106,7 +106,7 @@ const ForgotPassword = (props) => {
                   invalid: errors.password
                 })}
               />
-              <span className="red-text">{errors.password}</span>
+              <span className="text-danger">{errors.password}</span>
             </Form.Group>
 
             <Form.Group controlId="password2">
@@ -122,7 +122,7 @@ const ForgotPassword = (props) => {
                   invalid: errors.password2
                 })}
               />
-              <span className="red-text">{errors.password2}</span>
+              <span className="text-danger">{errors.password2}</span>
             </Form.Group>
 
             <hr />
